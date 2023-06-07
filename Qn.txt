@@ -56,3 +56,110 @@ image is the product image
 
 QN 4
 Shopping Cart 4
+In continuation with shopping cart 3, in this question we are going to create the Storage class which will provide us all the necessary functions to -
+
+
+
+To get the list of items already in cart
+
+
+To add a new item to cart
+
+
+To remove a product from cart.
+
+
+
+
+Implement the following steps in order to pass all the test cases-
+
+
+
+Create a Storage class.
+
+
+Create a static function named getproducts which gets the list of all the items already present in the cart.
+
+
+Note- Store the elements in the cart under the key “products” in local storage.
+
+Store it as an array of product objects.
+
+Create a static function named addtolocalstorage which takes in an argument (product) and adds it to the already existing list of products present in the cart.
+
+
+Create a function removeproduct which takes in a product id and removes that product from the local storage.
+
+
+
+QN 5
+Shopping Cart 5
+In continuation with shopping cart 4, in this question we are going to make the cart UI.
+
+Implement the following steps to pass all the test cases-
+
+
+
+Create a class named Ui which contains two methods.
+
+
+The first function “displayproducts” takes in a product as an argument and adds it to the existing list of products
+
+
+The “displayproducts” function inserts HTML inside the div with class=pccontainer
+
+
+The HTML it inserts is
+
+
+
+
+<div class="cartproduct">
+<div class="pnp">
+<div class="img">
+<img width="90px" src=" ${e.image} " alt="">
+</div>
+<div class="nameandprice">
+<p> ${e.title} </p>
+<p> ${e.price} </p>
+</div>
+</div>
+
+<button class="delete" productid=${e.id}>
+X
+</button>
+</div>
+
+
+
+
+make the “displayproducts” function static
+
+
+Create another static function named “displayproductsLS” which displays the list of items already present in the cart and is stored in the local storage
+
+
+Use the “Storage” class to get the list of items already present in the cart and for each element insert the given HTML inside the div with class=”pccontainer”
+
+
+
+
+<div class="cartproduct">
+<div class="pnp">
+<div class="img">
+<img width="90px" src=" ${e.image} " alt="">
+</div>
+<div class="nameandprice">
+<p> ${e.title} </p>
+<p> ${e.price} </p>
+</div>
+</div>
+
+<button class="delete" productid=${e.id}>
+X
+</button>
+</div>
+
+
+
+The remove element function has already been written for you
