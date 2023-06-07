@@ -19,3 +19,40 @@ alt="">
 <button class="addtocart" productid=${e.id}>add to cart icon</button>
 </div>
 </div>
+
+
+QN 2
+Shopping Cart 2
+In continuation with shopping cart 1 , in this question we will add the toggle feature to the cart, to display and hide the cart items.
+
+You have to do the following things to pass all the test cases-
+
+
+
+Select the div with class=”carticon”. Add an onclick event handler on it which adds a “cartopened” class to the div with class=”cartui”. This shows the cart items when div with class=”carticon” is clicked.
+
+
+Now to hide the cart, select the div with class=”closecart” and add an onclick event handler to it. The event handler removes the “cartopened” class from the div with class=”cartui”.
+
+QN 3
+Shopping Cart 3
+In continuation with shopping cart 2,in this question we will create a product class which will contain all the information of a particular product.
+
+Implement the following steps to pass all the test cases-
+
+Create a product class which has a constructor which takes in 4 inputs namely - id,title,price and image for a particular product
+
+
+
+id is the product id
+
+title is the name of the product
+
+
+price is the price of the product
+
+
+image is the product image
+
+QN 4
+Shopping Cart 4

@@ -215,15 +215,138 @@ productslist.map((e) => {
 //! QN 2
 
 let cartIcon = document.querySelector('.carticon');
-cartIcon.onclick = function() {
+cartIcon.onclick = function () {
     let cartUI = document.querySelector('.cartui');
     cartUI.classList.add('cartopened');
 };
 let closeCart = document.querySelector('.closecart');
-closeCart.onclick = function() {
+closeCart.onclick = function () {
     let cartUI = document.querySelector('.cartui');
     cartUI.classList.remove('cartopened');
 };
 
 
 //! QN 3
+class Product {
+    constructor(id, title, price, image) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.image = image;
+    }
+}
+
+
+//! QN 4
+
+class Storage {
+    static getproducts() {
+        const products = localStorage.getItem("products");
+        return products ? JSON.parse(products) : [];
+    }
+
+    static addtolocalstorage(product) {
+        const products = Storage.getproducts();
+        products.push(product);
+        localStorage.setItem("products", JSON.stringify(products));
+    }
+
+    static removeproduct(productId) {
+        const products = Storage.getproducts();
+        const updatedProducts = products.filter(product => product.id !== productId);
+        localStorage.setItem("products", JSON.stringify(updatedProducts));
+    }
+}
+
+
+
+//! QN 5
+
+class Ui {
+    static displayproducts(product) {
+        const pccontainer = document.querySelector('.pccontainer');
+        const cartproduct = document.createElement('div');
+        cartproduct.className = 'cartproduct';
+
+        const pnp = document.createElement('div');
+        pnp.className = 'pnp';
+
+        const img = document.createElement('div');
+        img.className = 'img';
+        const imgTag = document.createElement('img');
+        imgTag.setAttribute('width', '90px');
+        imgTag.setAttribute('src', product.image);
+        imgTag.setAttribute('alt', '');
+        img.appendChild(imgTag);
+
+        const nameandprice = document.createElement('div');
+        nameandprice.className = 'nameandprice';
+        const title = document.createElement('p');
+        title.textContent = product.title;
+        const price = document.createElement('p');
+        price.textContent = product.price;
+        nameandprice.appendChild(title);
+        nameandprice.appendChild(price);
+
+        pnp.appendChild(img);
+        pnp.appendChild(nameandprice);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete';
+        deleteBtn.setAttribute('productid', product.id);
+        deleteBtn.textContent = 'X';
+
+        cartproduct.appendChild(pnp);
+        cartproduct.appendChild(deleteBtn);
+
+        pccontainer.appendChild(cartproduct);
+    }
+
+    static displayproductsLS() {
+        const products = Storage.getProducts();
+        const pccontainer = document.querySelector('.pccontainer');
+
+        products.forEach(product => {
+            const cartproduct = document.createElement('div');
+            cartproduct.className = 'cartproduct';
+
+            const pnp = document.createElement('div');
+            pnp.className = 'pnp';
+
+            const img = document.createElement('div');
+            img.className = 'img';
+            const imgTag = document.createElement('img');
+            imgTag.setAttribute('width', '90px');
+            imgTag.setAttribute('src', product.image);
+            imgTag.setAttribute('alt', '');
+            img.appendChild(imgTag);
+
+            const nameandprice = document.createElement('div');
+            nameandprice.className = 'nameandprice';
+            const title = document.createElement('p');
+            title.textContent = product.title;
+            const price = document.createElement('p');
+            price.textContent = product.price;
+            nameandprice.appendChild(title);
+            nameandprice.appendChild(price);
+
+            pnp.appendChild(img);
+            pnp.appendChild(nameandprice);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete';
+            deleteBtn.setAttribute('productid', product.id);
+            deleteBtn.textContent = 'X';
+
+            deleteBtn.addEventListener('click', () => {
+                Storage.removeProduct(product.id);
+                cartproduct.remove();
+            });
+
+            cartproduct.appendChild(pnp);
+            cartproduct.appendChild(deleteBtn);
+
+            pccontainer.appendChild(cartproduct);
+        });
+    }
+}
