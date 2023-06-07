@@ -21,7 +21,7 @@ alt="">
 </div>
 
 
-QN 2
+QN 2 ===============----------------------------------------------------------------
 Shopping Cart 2
 In continuation with shopping cart 1 , in this question we will add the toggle feature to the cart, to display and hide the cart items.
 
@@ -34,7 +34,7 @@ Select the div with class=”carticon”. Add an onclick event handler on it whi
 
 Now to hide the cart, select the div with class=”closecart” and add an onclick event handler to it. The event handler removes the “cartopened” class from the div with class=”cartui”.
 
-QN 3
+QN 3 ===============----------------------------------------------------------------
 Shopping Cart 3
 In continuation with shopping cart 2,in this question we will create a product class which will contain all the information of a particular product.
 
@@ -54,7 +54,7 @@ price is the price of the product
 
 image is the product image
 
-QN 4
+QN 4  ===============----------------------------------------------------------------
 Shopping Cart 4
 In continuation with shopping cart 3, in this question we are going to create the Storage class which will provide us all the necessary functions to -
 
@@ -92,7 +92,7 @@ Create a function removeproduct which takes in a product id and removes that pro
 
 
 
-QN 5
+QN 5 ----------------------------------------------------------------
 Shopping Cart 5
 In continuation with shopping cart 4, in this question we are going to make the cart UI.
 
@@ -163,3 +163,6 @@ X
 
 
 The remove element function has already been written for you
+
+
+QN 6  ===============----------------------------------------------------------------

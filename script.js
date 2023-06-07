@@ -303,7 +303,7 @@ class Ui {
     }
 
     static displayproductsLS() {
-        const products = Storage.getProducts();
+        const products = Storage.getproducts();
         const pccontainer = document.querySelector('.pccontainer');
 
         products.forEach(product => {
@@ -350,3 +350,16 @@ class Ui {
         });
     }
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    Ui.displayproducts();
+    Ui.displayproductsLS();
+
+    // Get the total number of items present in local storage
+    const products = Storage.getProducts();
+    const totalItems = products.length;
+
+    // Set the 'items' attribute of the 'bag' element to the total number of items
+    const bagElement = document.querySelector('.carticon');
+    bagElement.setAttribute('items', totalItems);
+});
