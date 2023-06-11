@@ -196,37 +196,40 @@ function myFunction() {
     }
 }
 
-let productscontainer = document.getElementsByClassName('productscontainer')[0];
+// 1
+//list products
+
+let productcontainer = document.querySelector(".productscontainer");
 
 productslist.map((e) => {
-    productscontainer.innerHTML += `
-        <div class="product">
-            <img class='pimage' width="250px" height="350px" src="${e.image}" alt="">
-            <p class='ptitle'>${e.title}</p>
-            <div class="priceandaddtocart">
-                <p class="pprice">${e.price} DH</p>
-                <button class="addtocart" productid=${e.id}>add to cart icon</button>
-            </div>
-        </div>
-    `;
+    productcontainer.innerHTML += `
+      <div class="product">
+          <img class='pimage' width="250px" height="350px" src=" ${e.image} "
+              alt="">
+          <p class='ptitle'>${e.title}</p>
+          <div class="priceandaddtocart">
+              <p class="pprice">${e.price} DH</p>
+              <button class="addtocart" productid=${e.id}>add to cart icon</button>
+          </div>
+      </div>
+  `;
 });
 
-
-//! QN 2
-
-let cartIcon = document.querySelector('.carticon');
-cartIcon.onclick = function () {
-    let cartUI = document.querySelector('.cartui');
-    cartUI.classList.add('cartopened');
+// 2
+//display cart ui
+let cartui = document.querySelector(".cartui");
+let overlay = document.querySelector(".overlay");
+let carticon = document.querySelector(".carticon");
+let bag = document.querySelector(".carticon");
+window.bag = bag;
+carticon.onclick = () => {
+    cartui.classList.add("cartopened");
 };
-let closeCart = document.querySelector('.closecart');
-closeCart.onclick = function () {
-    let cartUI = document.querySelector('.cartui');
-    cartUI.classList.remove('cartopened');
+document.querySelector(".closecart").onclick = () => {
+    cartui.classList.remove("cartopened");
 };
 
-
-//! QN 3
+// 3
 class Product {
     constructor(id, title, price, image) {
         this.id = id;
@@ -236,145 +239,113 @@ class Product {
     }
 }
 
+window.Product = Product;
 
-//! QN 4
-
+// 4
 class Storage {
     static getproducts() {
-        const products = localStorage.getItem("products");
-        return products ? JSON.parse(products) : [];
+        let products;
+        if (localStorage.getItem("products")) {
+            products = JSON.parse(localStorage.getItem("products"));
+        } else {
+            products = [];
+        }
+        return products;
     }
 
-    static addtolocalstorage(product) {
-        const products = Storage.getproducts();
-        products.push(product);
+    static addtolocalstorage(e) {
+        let products = Storage.getproducts();
+        products.push(e);
         localStorage.setItem("products", JSON.stringify(products));
     }
 
-    static removeproduct(productId) {
-        const products = Storage.getproducts();
-        const updatedProducts = products.filter(product => product.id !== productId);
-        localStorage.setItem("products", JSON.stringify(updatedProducts));
+    static removeproduct(id) {
+        let products = Storage.getproducts();
+        products.forEach((p, i) => {
+            if (p.id == id) {
+                products.splice(i, 1);
+            }
+        });
+        localStorage.setItem("products", JSON.stringify(products));
     }
 }
 
-
-
-//! QN 5
+window.Storage = Storage;
+// 5
+//class Ui
 class Ui {
-    static displayproducts(product) {
-        const pccontainer = document.querySelector('.pccontainer');
-        const cartproduct = document.createElement('div');
-        cartproduct.className = 'cartproduct';
+    static displayproducts(e) {
+        document.querySelector(".pccontainer").innerHTML += `
+                  <div class="cartproduct">
+                  <div class="pnp">
+                      <div class="img">
+                          <img width="90px" src=" ${e.image} " alt="">
+                      </div>
+                      <div class="nameandprice">
+                          <p> ${e.title} </p>
+                          <p> ${e.price} </p>
+                      </div>
+                  </div>
 
-        const pnp = document.createElement('div');
-        pnp.className = 'pnp';
-
-        const img = document.createElement('div');
-        img.className = 'img';
-        const imgTag = document.createElement('img');
-        imgTag.setAttribute('width', '90px');
-        imgTag.setAttribute('src', product.image);
-        imgTag.setAttribute('alt', '');
-        img.appendChild(imgTag);
-
-        const nameandprice = document.createElement('div');
-        nameandprice.className = 'nameandprice';
-        const title = document.createElement('p');
-        title.textContent = product.title;
-        const price = document.createElement('p');
-        price.textContent = product.price;
-        nameandprice.appendChild(title);
-        nameandprice.appendChild(price);
-
-        pnp.appendChild(img);
-        pnp.appendChild(nameandprice);
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'delete';
-        deleteBtn.setAttribute('productid', product.id);
-        deleteBtn.textContent = 'X';
-
-        cartproduct.appendChild(pnp);
-        cartproduct.appendChild(deleteBtn);
-
-        pccontainer.appendChild(cartproduct);
+                  <button class="delete" productid=${e.id}>
+                      X
+                  </button>
+              </div>
+              `;
     }
-
     static displayproductsLS() {
-        const products = Storage.getproducts();
-        const pccontainer = document.querySelector('.pccontainer');
+        let products = Storage.getproducts();
+        products.map((e) => {
+            document.querySelector(".pccontainer").innerHTML += `
+                  <div class="cartproduct">
+                  <div class="pnp">
+                      <div class="img">
+                          <img width="90px" src=" ${e.image} " alt="">
+                      </div>
+                      <div class="nameandprice">
+                          <p> ${e.title} </p>
+                          <p> ${e.price} </p>
+                      </div>
+                  </div>
 
-        products.forEach(product => {
-            const cartproduct = document.createElement('div');
-            cartproduct.className = 'cartproduct';
-
-            const pnp = document.createElement('div');
-            pnp.className = 'pnp';
-
-            const img = document.createElement('div');
-            img.className = 'img';
-            const imgTag = document.createElement('img');
-            imgTag.setAttribute('width', '90px');
-            imgTag.setAttribute('src', product.image);
-            imgTag.setAttribute('alt', '');
-            img.appendChild(imgTag);
-
-            const nameandprice = document.createElement('div');
-            nameandprice.className = 'nameandprice';
-            const title = document.createElement('p');
-            title.textContent = product.title;
-            const price = document.createElement('p');
-            price.textContent = product.price;
-            nameandprice.appendChild(title);
-            nameandprice.appendChild(price);
-
-            pnp.appendChild(img);
-            pnp.appendChild(nameandprice);
-
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete';
-            deleteBtn.setAttribute('productid', product.id);
-            deleteBtn.textContent = 'X';
-
-            deleteBtn.addEventListener('click', () => {
-                Storage.removeProduct(product.id);
-                cartproduct.remove();
-            });
-
-            cartproduct.appendChild(pnp);
-            cartproduct.appendChild(deleteBtn);
-
-            pccontainer.appendChild(cartproduct);
+                  <button class="delete" productid=${e.id}>
+                      X
+                  </button>
+              </div>
+              `;
         });
     }
+
+    static removeproduct(e) {
+        e.parentElement.remove();
+    }
 }
 
-// 6
-// Event listener to display cart items from local storage when the page loads
+window.Ui = Ui;
 
+// 6
 document.addEventListener("DOMContentLoaded", function () {
     // write your code here
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  const bag = document.querySelector("#bag");
-  bag.items = cartItems.length;
-  renderCartItems(cartItems);
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const bag = document.querySelector("#bag");
+    bag.items = cartItems.length;
+    renderCartItems(cartItems);
 });
 
 function renderCartItems(items) {
-  const cartContainer = document.querySelector("#cart-container");
-  cartContainer.innerHTML = "";
+    const cartContainer = document.querySelector("#cart-container");
+    cartContainer.innerHTML = "";
 
-  items.forEach(function (item) {
-    const productElement = document.createElement("div");
-    productElement.classList.add("product");
-    productElement.innerHTML = `
+    items.forEach(function (item) {
+        const productElement = document.createElement("div");
+        productElement.classList.add("product");
+        productElement.innerHTML = `
       <img src="${item.image}" alt="${item.name}" />
       <div class="product-info">
         <h3>${item.name}</h3>
         <p>${item.price}</p>
       </div>
     `;
-    cartContainer.appendChild(productElement);
-  });
+        cartContainer.appendChild(productElement);
+    });
 }
