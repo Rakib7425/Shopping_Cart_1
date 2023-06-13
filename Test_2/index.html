@@ -1,35 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Shopping Cart</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
 </head>
 
 <body>
+
+    <div class="overlay">
+
+    </div>
+
     <header>
-        <div class="carticon">
-            <img src="cart-icon.png" alt="Cart Icon">
-            <span class="cartcount"></span>
-        </div>
+        <div class="logo">Logo</div>
+        <button class="carticon" items="0">Cart</button>
+
     </header>
 
-    <main>
-        <div class="productscontainer"></div>
-    </main>
-
     <div class="cartui">
-        <div class="closecart">X</div>
-        <h2>Cart</h2>
-        <ul class="cartitems"></ul>
-        <div class="carttotal">
-            <p>Total Amount:</p>
-            <p class="totalamount"></p>
-            <button class="checkout">Checkout</button>
+        <button class="closecart">close</button>
+        <div class="pccontainer">
+
         </div>
     </div>
 
-    <div class="overlay"></div>
+
+    <div class="productscontainer">
+
+    </div>
 
     <script src="script.js"></script>
 </body>

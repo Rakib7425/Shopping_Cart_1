@@ -181,6 +181,8 @@ let productslist = [
     },
 ];
 
+
+
 //sticky header
 let header = document.querySelector("header");
 let sticky = header.offsetTop;
@@ -196,37 +198,40 @@ function myFunction() {
     }
 }
 
-let productscontainer = document.getElementsByClassName('productscontainer')[0];
+// 1
+//list products
 
+let productcontainer = document.querySelector(".productscontainer");
+// productcontainer.innerHTML = "";
 productslist.map((e) => {
-    productscontainer.innerHTML += `
-        <div class="product">
-            <img class='pimage' width="250px" height="350px" src="${e.image}" alt="">
-            <p class='ptitle'>${e.title}</p>
-            <div class="priceandaddtocart">
-                <p class="pprice">${e.price} DH</p>
-                <button class="addtocart" productid=${e.id}>add to cart icon</button>
-            </div>
-        </div>
-    `;
+    productcontainer.innerHTML += `
+      <div class="product">
+          <img class='pimage' width="250px" height="350px" src=" ${e.image} "
+              alt="">
+          <p class='ptitle'>${e.title}</p>
+          <div class="priceandaddtocart">
+              <p class="pprice">${e.price} DH</p>
+            
+              <button class="addtocart" productid=${e.id} onclick="addToCart(${e.id})">add to cart icon</button>
+          </div>
+      </div>
+  `;
 });
 
-
-//! QN 2
-
-let cartIcon = document.querySelector('.carticon');
-cartIcon.onclick = function () {
-    let cartUI = document.querySelector('.cartui');
-    cartUI.classList.add('cartopened');
+// 2
+//display cart ui
+let cartui = document.querySelector(".cartui");
+let overlay = document.querySelector(".overlay");
+let carticon = document.querySelector(".carticon");
+let bag = document.querySelector(".carticon");
+carticon.onclick = () => {
+    cartui.classList.add("cartopened");
 };
-let closeCart = document.querySelector('.closecart');
-closeCart.onclick = function () {
-    let cartUI = document.querySelector('.cartui');
-    cartUI.classList.remove('cartopened');
+document.querySelector(".closecart").onclick = () => {
+    cartui.classList.remove("cartopened");
 };
 
-
-//! QN 3
+// 3
 class Product {
     constructor(id, title, price, image) {
         this.id = id;
@@ -236,152 +241,95 @@ class Product {
     }
 }
 
-
-//! QN 4
+window.Product = Product;
 
 class Storage {
     static getproducts() {
-        const products = localStorage.getItem("products");
-        return products ? JSON.parse(products) : [];
+        let products;
+        if (localStorage.getItem("products")) {
+            products = JSON.parse(localStorage.getItem("products"));
+        } else {
+            products = [];
+        }
+        return products;
     }
 
-    static addtolocalstorage(product) {
-        const products = Storage.getproducts();
-        products.push(product);
+    static addtolocalstorage(e) {
+        let products = Storage.getproducts();
+        products.push(e);
+        localStorage.setItem("products", JSON.stringify(products));
+        Ui.displayproducts(e);
+    }
+
+    static removeproduct(id) {
+        let products = Storage.getproducts();
+        products = products.filter((p) => p.id !== id); // Use filter to remove the product with the matching id
         localStorage.setItem("products", JSON.stringify(products));
     }
-
-    static removeproduct(productId) {
-        const products = Storage.getproducts();
-        const updatedProducts = products.filter(product => product.id !== productId);
-        localStorage.setItem("products", JSON.stringify(updatedProducts));
-    }
 }
 
-
-
-//! QN 5
+window.Storage = Storage
+// 5
+//class Ui
 class Ui {
-    static displayproducts(product) {
-        const pccontainer = document.querySelector('.pccontainer');
-        const cartproduct = document.createElement('div');
-        cartproduct.className = 'cartproduct';
-
-        const pnp = document.createElement('div');
-        pnp.className = 'pnp';
-
-        const img = document.createElement('div');
-        img.className = 'img';
-        const imgTag = document.createElement('img');
-        imgTag.setAttribute('width', '90px');
-        imgTag.setAttribute('src', product.image);
-        imgTag.setAttribute('alt', '');
-        img.appendChild(imgTag);
-
-        const nameandprice = document.createElement('div');
-        nameandprice.className = 'nameandprice';
-        const title = document.createElement('p');
-        title.textContent = product.title;
-        const price = document.createElement('p');
-        price.textContent = product.price;
-        nameandprice.appendChild(title);
-        nameandprice.appendChild(price);
-
-        pnp.appendChild(img);
-        pnp.appendChild(nameandprice);
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'delete';
-        deleteBtn.setAttribute('productid', product.id);
-        deleteBtn.textContent = 'X';
-
-        cartproduct.appendChild(pnp);
-        cartproduct.appendChild(deleteBtn);
-
-        pccontainer.appendChild(cartproduct);
+    static displayproducts(e) {
+        document.querySelector(".pccontainer").innerHTML += `
+                  <div class="cartproduct">
+                  <div class="pnp">
+                      <div class="img">
+                          <img width="90px" src=" ${e.image} " alt="">
+                      </div>
+                      <div class="nameandprice">
+                          <p> ${e.title} </p>
+                          <p> ${e.price} </p>
+                      </div>
+                  </div>
+  
+                  <button class="delete" productid=${e.id}>
+                      X
+                  </button>
+              </div>
+              `;
     }
-
     static displayproductsLS() {
-        const products = Storage.getproducts();
-        const pccontainer = document.querySelector('.pccontainer');
-
-        products.forEach(product => {
-            const cartproduct = document.createElement('div');
-            cartproduct.className = 'cartproduct';
-
-            const pnp = document.createElement('div');
-            pnp.className = 'pnp';
-
-            const img = document.createElement('div');
-            img.className = 'img';
-            const imgTag = document.createElement('img');
-            imgTag.setAttribute('width', '90px');
-            imgTag.setAttribute('src', product.image);
-            imgTag.setAttribute('alt', '');
-            img.appendChild(imgTag);
-
-            const nameandprice = document.createElement('div');
-            nameandprice.className = 'nameandprice';
-            const title = document.createElement('p');
-            title.textContent = product.title;
-            const price = document.createElement('p');
-            price.textContent = product.price;
-            nameandprice.appendChild(title);
-            nameandprice.appendChild(price);
-
-            pnp.appendChild(img);
-            pnp.appendChild(nameandprice);
-
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete';
-            deleteBtn.setAttribute('productid', product.id);
-            deleteBtn.textContent = 'X';
-
-            deleteBtn.addEventListener('click', () => {
-                Storage.removeProduct(product.id);
-                cartproduct.remove();
-            });
-
-            cartproduct.appendChild(pnp);
-            cartproduct.appendChild(deleteBtn);
-
-            pccontainer.appendChild(cartproduct);
+        let products = Storage.getproducts();
+        products.map((e) => {
+            document.querySelector(".pccontainer").innerHTML += `
+                  <div class="cartproduct">
+                  <div class="pnp">
+                      <div class="img">
+                          <img width="90px" src=" ${e.image} " alt="">
+                      </div>
+                      <div class="nameandprice">
+                          <p> ${e.title} </p>
+                          <p> ${e.price} </p>
+                      </div>
+                  </div>
+  
+                  <button class="delete" productid=${e.id}>
+                      X
+                  </button>
+              </div>
+              `;
         });
     }
+
+    static removeproduct(e) {
+        e.parentElement.remove();
+    }
 }
 
-// 6
+window.Ui = Ui
+
 // 6
 document.addEventListener("DOMContentLoaded", function () {
     Ui.displayproductsLS();
     bag.setAttribute("items", Storage.getproducts().length);
 });
 
-
-
-
-
-// 7
-// 7
-//add product event
-
-document.querySelectorAll(".addtocart").forEach((e) => {
-    e.onclick = (evt) => {
-        let id = evt.target.getAttribute("productid");
-        let price = evt.target.previousElementSibling.innerHTML;
-        let image =
-            evt.target.parentElement.previousElementSibling.previousElementSibling.getAttribute(
-                "src"
-            );
-        let title = evt.target.parentElement.previousElementSibling.innerHTML;
-        let product = new Product(id, title, price, image);
-        let products = Storage.getproducts();
-        let ids = Object.values(products).map((r) => r.id);
-        if (ids.includes(id)) return;
-        else {
-            Storage.addtolocalstorage(product);
-            Ui.displayproducts(product);
-            bag.setAttribute("items", Storage.getproducts().length);
-        }
-    };
-});
+function addToCart(productId) {
+    const product = productslist.find((p) => p.id === productId);
+    const newProduct = new Product(product.id, product.title, product.price, product.image);
+    Storage.addtolocalstorage(newProduct);
+    bag.setAttribute("items", Storage.getproducts().length);
+}
