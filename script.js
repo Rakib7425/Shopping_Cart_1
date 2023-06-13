@@ -352,29 +352,31 @@ class Ui {
 
 // 6
 // Event listener to display cart items from local storage when the page loads
-
 document.addEventListener("DOMContentLoaded", function () {
     // write your code here
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  const bag = document.querySelector("#bag");
-  bag.items = cartItems.length;
-  renderCartItems(cartItems);
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const bag = document.querySelector("#bag");
+    bag.items = cartItems.length;
+    renderCartItems(cartItems);
 });
 
 function renderCartItems(items) {
-  const cartContainer = document.querySelector("#cart-container");
-  cartContainer.innerHTML = "";
+    const cartContainer = document.querySelector("#cart-container");
+    cartContainer.innerHTML = "";
 
-  items.forEach(function (item) {
-    const productElement = document.createElement("div");
-    productElement.classList.add("product");
-    productElement.innerHTML = `
+    items.forEach(function (item) {
+        const productElement = document.createElement("div");
+        productElement.classList.add("product");
+        productElement.innerHTML = `
       <img src="${item.image}" alt="${item.name}" />
       <div class="product-info">
         <h3>${item.name}</h3>
         <p>${item.price}</p>
       </div>
     `;
-    cartContainer.appendChild(productElement);
-  });
+        cartContainer.appendChild(productElement);
+    });
 }
+
+
+

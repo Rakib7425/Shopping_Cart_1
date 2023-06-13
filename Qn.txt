@@ -177,3 +177,9 @@ Add an event listener to the dom which displays all the elements present in the 
 
 
 A variable named “bag” has been declared in the code given to you. You have to set its “items” attribute to the total number of items present in the Local Storage when the page loads
+
+7 ==============================================--------------------------------------------
+Shopping Cart 7
+In continuation with shopping cart 6 , in this question we are going to add a click event listener to each of the item displayed on the page so that it gets added to the cart as well as the local storage.
+
+Your task in this question is to add a click event handler to all the products being displayed on the page so that when the user clicks on the “Add to Cart” button for a particular product the product gets added to the local storage and the product shows up in the cart items.

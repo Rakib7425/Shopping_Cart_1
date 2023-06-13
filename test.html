@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <title>Document</title>
     <style>
         * {
@@ -28,6 +29,7 @@
         }
 
         .productscontainer {
+
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 5px;
@@ -148,29 +150,34 @@
             border-bottom: 1px solid gainsboro;
         }
 
-        .cartproduct img {
-            width: 30px;
-            height: 30px;
-            object-fit: cover;
-            border-radius: 50%;
+        .pnp .img {
+            width: 9rem;
+            height: 8rem;
         }
 
-        .cartproduct span {
-            font-weight: bold;
+        .pnp .img img {
+            width: 9rem;
+            height: 8rem;
+        }
+
+        @media screen and (max-width: 700px) {
+            .cartui {
+                width: 90vw;
+            }
         }
     </style>
 </head>
 
 <body>
+
+    <div class="overlay">
+
+    </div>
+
     <header>
         <div class="logo">Logo</div>
-        <div class="carticon" items="0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path
-                    d="M21 20c-.4 0-.7-.1-1-.4l-6-5H9v2c0 .6-.4 1-1 1H5c-.6 0-1-.4-1-1v-2H3c-.6 0-1-.4-1-1V8c0-.6.4-1 1-1h2V5c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v1h2c.6 0 1 .4 1 1v6c0 .6-.4 1-1 1h-2v2c0 .6-.4 1-1 1zM5 10h2v6H5v-6zm4 0h2v6H9v-6zm4 0h2v6h-2v-6zm4 0h2v6h-2v-6z" />
-            </svg>
-            <span>Cart</span>
-        </div>
+        <button class="carticon" onclick="showCart()" items="0">Cart</button>
+
     </header>
 
     <section class="productscontainer">
@@ -180,46 +187,52 @@
     <div class="overlay"></div>
 
     <div class="cartui">
-        <div class="closecart">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path
-                    d="M7.4 6l5.3 5.3 5.3-5.3 1.4 1.4-5.3 5.3 5.3 5.3-1.4 1.4-5.3-5.3-5.3 5.3-1.4-1.4 5.3-5.3-5.3-5.3L7.4 6zM2 2h20v20H2V2zm17.6 17.6L4.4 2.4 6 1 22 17 20.6 18.4z" />
-            </svg>
-        </div>
+        <button class="closecart">close</button>
         <div class="pccontainer">
-            <!-- Cart products will be dynamically generated here -->
+
         </div>
-        <button>Checkout</button>
+    </div>
+
+
+    <div class="productscontainer">
     </div>
 
     <script>
+        // let productsList = [
+        //     {
+        //         id: 1,
+        //         title: "Product 1",
+        //         price: 10.99,
+        //         description: "This is product 1.",
+        //         category: "Category 1",
+        //         image: "product1.jpg"
+        //     }
+        // ];
+
         let productsList = [
             {
                 id: 1,
-                title: "Product 1",
-                price: 10.99,
-                description: "This is product 1.",
-                category: "Category 1",
-                image: "product1.jpg"
+                title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+                price: 109.95,
+                description:
+                    "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+                category: "men's clothing",
+                image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
             },
             {
                 id: 2,
-                title: "Product 2",
-                price: 19.99,
-                description: "This is product 2.",
-                category: "Category 2",
-                image: "product2.jpg"
-            },
-            {
-                id: 3,
-                title: "Product 3",
-                price: 7.99,
-                description: "This is product 3.",
-                category: "Category 1",
-                image: "product3.jpg"
+                title: "Mens Casual Premium Slim Fit T-Shirts ",
+                price: 22.3,
+                description:
+                    "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+                category: "men's clothing",
+                image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
             }
         ];
 
+        // 
+        // 
+        // 
         const productsContainer = document.querySelector(".productscontainer");
         const cartIcon = document.querySelector(".carticon");
         const cartUI = document.querySelector(".cartui");
