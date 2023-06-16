@@ -201,7 +201,7 @@ function myFunction() {
 //list products
 
 let productcontainer = document.querySelector(".productscontainer");
-// productcontainer.innerHTML = "";
+productcontainer.innerHTML = "";
 productslist.map((e) => {
     productcontainer.innerHTML += `
       <div class="product">

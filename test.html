@@ -253,12 +253,15 @@
         }
 
         function addToCart(product) {
-            cartItems++;
-            carticon.setAttribute("items", cartItems);
-            cart.push(product);
-            saveCartToLocalStorage();
-            const cartProduct = generateCartProduct(product);
-            cartContainer.appendChild(cartProduct);
+            // if (product.id.includes(product.id)) return;
+            // else {
+                cartItems++;
+                carticon.setAttribute("items", cartItems);
+                cart.push(product);
+                saveCartToLocalStorage();
+                const cartProduct = generateCartProduct(product);
+                cartContainer.appendChild(cartProduct);
+            // }
         }
 
         function removeFromCart(e) {
