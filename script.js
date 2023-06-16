@@ -203,18 +203,20 @@ let productcontainer = document.querySelector(".productscontainer");
 
 productslist.map((e) => {
     productcontainer.innerHTML += `
-    <div class="product">
-        <img class='pimage' width="250px" height="350px" src="${e.image}"
-            alt="">
-        <p class='ptitle'>${e.title}</p>
-        <div class="priceandaddtocart">
-            <p class="pprice">${e.price} DH</p>
-            <button class="addtocart" productid=${e.id}>add to cart icon</button>
-        </div>
-    </div>
+      <div class="product">
+          <img class='pimage' width="250px" height="350px" src=" ${e.image} "
+              alt="">
+          <p class='ptitle'>${e.title}</p>
+          <div class="priceandaddtocart">
+              <p class="pprice">${e.price} DH</p>
+              <button class="addtocart" productid=${e.id}>add to cart icon</button>
+          </div>
+      </div>
   `;
 });
 
+// 2
+//display cart ui
 let cartui = document.querySelector(".cartui");
 let overlay = document.querySelector(".overlay");
 let carticon = document.querySelector(".carticon");
@@ -226,6 +228,7 @@ document.querySelector(".closecart").onclick = () => {
     cartui.classList.remove("cartopened");
 };
 
+// 3
 class Product {
     constructor(id, title, price, image) {
         this.id = id;
@@ -235,6 +238,8 @@ class Product {
     }
 }
 
+window.Product = Product;
+// 4 
 class Storage {
     static getproducts() {
         let products;
@@ -263,31 +268,49 @@ class Storage {
     }
 }
 
+window.Storage = Storage
+// 5
+//class Ui
 class Ui {
     static displayproducts(e) {
         document.querySelector(".pccontainer").innerHTML += `
-      <div class="cartproduct">
-      <div class="pnp">
-          <div class="img">
-              <img width="90px" src="${e.image}" alt="">
-          </div>
-          <div class="nameandprice">
-              <p>${e.title}</p>
-              <p>${e.price}</p>
-          </div>
-      </div>
+                  <div class="cartproduct">
+                  <div class="pnp">
+                      <div class="img">
+                          <img width="90px" src=" ${e.image} " alt="">
+                      </div>
+                      <div class="nameandprice">
+                          <p> ${e.title} </p>
+                          <p> ${e.price} </p>
+                      </div>
+                  </div>
   
-      <button class="delete" productid=${e.id}>
-          X
-      </button>
-  </div>
-  `;
+                  <button class="delete" productid=${e.id}>
+                      X
+                  </button>
+              </div>
+              `;
     }
-
     static displayproductsLS() {
         let products = Storage.getproducts();
         products.map((e) => {
-            Ui.displayproducts(e);
+            document.querySelector(".pccontainer").innerHTML += `
+                  <div class="cartproduct">
+                  <div class="pnp">
+                      <div class="img">
+                          <img width="90px" src=" ${e.image} " alt="">
+                      </div>
+                      <div class="nameandprice">
+                          <p> ${e.title} </p>
+                          <p> ${e.price} </p>
+                      </div>
+                  </div>
+  
+                  <button class="delete" productid=${e.id}>
+                      X
+                  </button>
+              </div>
+              `;
         });
     }
 
@@ -296,21 +319,29 @@ class Ui {
     }
 }
 
+window.Ui = Ui
+
+// 6
 document.addEventListener("DOMContentLoaded", function () {
     Ui.displayproductsLS();
     bag.setAttribute("items", Storage.getproducts().length);
 });
 
-const addtocart = document.querySelectorAll('.addtocart');
-addtocart.forEach((e) => {
+// 7
+//add product event
+
+document.querySelectorAll(".addtocart").forEach((e) => {
     e.onclick = (evt) => {
         let id = evt.target.getAttribute("productid");
         let price = evt.target.previousElementSibling.innerHTML;
-        let image = evt.target.parentElement.previousElementSibling.previousElementSibling.getAttribute("src");
+        let image =
+            evt.target.parentElement.previousElementSibling.previousElementSibling.getAttribute(
+                "src"
+            );
         let title = evt.target.parentElement.previousElementSibling.innerHTML;
         let product = new Product(id, title, price, image);
         let products = Storage.getproducts();
-        let ids = products.map((r) => r.id);
+        let ids = Object.values(products).map((r) => r.id);
         if (ids.includes(id)) return;
         else {
             Storage.addtolocalstorage(product);
@@ -322,7 +353,6 @@ addtocart.forEach((e) => {
 
 //8
 // remove product event
-
 document.querySelector(".pccontainer").onclick = (e) => {
     if (e.target.classList.contains("delete")) {
         let id = e.target.getAttribute("productid");
