@@ -187,3 +187,7 @@ Your task in this question is to add a click event handler to all the products b
 
 
 8 ==============================================--------------------------------------------
+Shopping Cart 8
+In continuation with shopping cart 7, in this question we are going to add an event listener to the items present in the cart which lets us delete the items present in the cart and remove them from the local storage.
+
+In this question you have to implement the feature that when user click on the button with class=”delete” , that product should be removed from the cart as well as the local storage.
